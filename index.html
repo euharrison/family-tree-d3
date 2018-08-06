@@ -50,6 +50,8 @@ function update() {
       .links(links)
       .start();
 
+  if (node) link.remove();
+
   link = svg.selectAll(".link")
       .data(links, function(d) { return d.target.id; });
 
@@ -57,6 +59,8 @@ function update() {
       .attr("class", "link");
 
   link.exit().remove();
+
+  if (node) node.remove();
 
   node = svg.selectAll(".node")
       .data(nodes, function(d) { return d.id; })
