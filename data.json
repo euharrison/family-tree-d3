@@ -1,22 +1,74 @@
-
 {
- "name": "Randolfo Pereira & Cirene Maria",
- "children": [
-  {
-    "name": "Rubens",
-    "children": [
-      {"name": "Zé Roberto"},
-      {"name": "Cristina"},
-      {"name": "Rita"}
-    ]
-  },
-  {
-    "name": "Hugo",
-    "children": [
-      {"name": "Hudson"},
-      {"name": "Hudna"},
-      {"name": "Harrison"}
-    ]
-  }
- ]
+  "nodes": [
+    {
+      "name": "Randolfo",
+      "generation": 1
+    },
+    {
+      "name": "Cirene",
+      "generation": 1
+    },
+    {
+      "name": "Hugo",
+      "generation": 2
+    },
+    {
+      "name": "Antonio",
+      "generation": 2
+    },
+    {
+      "name": "Hudson",
+      "generation": 3
+    },
+    {
+      "name": "Hudna",
+      "generation": 3
+    },
+    {
+      "name": "Harrison",
+      "generation": 3
+    }
+  ],
+  "links": [
+    {
+      "source": 0,
+      "target": 1,
+      "type": "marriage"
+    },
+    {
+      "source": 0,
+      "target": 2,
+      "type": "father"
+    },
+    {
+      "source": 1,
+      "target": 2,
+      "type": "mother"
+    },
+    {
+      "source": 0,
+      "target": 3,
+      "type": "father"
+    },
+    {
+      "source": 1,
+      "target": 3,
+      "type": "mother"
+    },
+    {
+      "source": 2,
+      "target": 4,
+      "type": "father"
+    },
+    {
+      "source": 2,
+      "target": 5,
+      "type": "father"
+    },
+    {
+      "source": 2,
+      "target": 6,
+      "type": "father"
+    }
+  ]
 }

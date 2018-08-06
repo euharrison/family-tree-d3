@@ -2,13 +2,23 @@
 <meta charset="utf-8">
 <style>
 
-.link {
+body {
+  margin: 0;
+}
+
+svg text {
+  pointer-events: none;
+  font-family: sans-serif;
+  font-size: 10px;
+  text-anchor: middle;
+}
+
+.link line {
   stroke: #ccc;
 }
 
-.node text {
-  pointer-events: none;
-  font: 10px sans-serif;
+.link text {
+  fill: #aaa;
 }
 
 </style>
@@ -22,15 +32,35 @@ var width = window.innerWidth,
     link,
     root;
 
+var dictionary = {
+  'marriage': 'Casamento',
+  'mother': 'Mãe',
+  'father': 'Pai',
+}
+
 var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height)
-    .attr("text-anchor", "middle");
+
+svg.append("defs").selectAll("marker")
+    .data(["suit", "licensing", "resolved"])
+  .enter().append("marker")
+    .attr("id", function(d) { return d; })
+    .attr("viewBox", "0 -5 10 10")
+    .attr("refX", 50)
+    .attr("refY", 0)
+    .attr("markerWidth", 6)
+    .attr("markerHeight", 6)
+    .attr("orient", "auto")
+  .append("path")
+    .attr("d", "M0,-5L10,0L0,5 L10,0 L0, -5")
+    .style("stroke", "#4679BD")
+    .style("opacity", "0.6");
 
 var force = d3.layout.force()
     .on("tick", tick)
-    .gravity(0)
-    .distance(100)
+    .gravity(0.05)
+    .distance(150)
     .charge(-1000)
     .size([width, height]);
 
@@ -43,8 +73,8 @@ d3.json("data.json", function(json) {
 });
 
 function update() {
-  var nodes = flatten(root),
-      links = d3.layout.tree().links(nodes);
+  var nodes = root.nodes,
+      links = root.links;
 
   force
       .nodes(nodes)
@@ -54,45 +84,59 @@ function update() {
   if (node) link.remove();
 
   link = svg.selectAll(".link")
-      .data(links, function(d) { return d.target.id; });
+      .data(links)
 
-  link.enter().append("line")
+  link.enter().append("g")
+      .attr("class", function(d) { return "link "+d.type })
+
+  link.append("line")
+      .style("marker-end",  "url(#suit)")
       .attr("class", "link");
+
+  link.append("text")
+      .attr("dx", 0)
+      .attr("dy", "2em")
+      .text(function(d) { return dictionary[d.type] || d.type });
 
   link.exit().remove();
 
   if (node) node.remove();
 
   node = svg.selectAll(".node")
-      .data(nodes, function(d) { return d.id; })
+      .data(nodes)
 
   node.enter().append("g")
       .attr("class", "node")
-      .on("click", click)
+      .on('dblclick', click)
       .call(force.drag);
 
   node.append("circle")
-      .attr("r", function(d) { return 10 + 4 * d.size })
+      .attr("r", 22.5)
       .attr("fill", color);
 
-  node.append("image")
-      .attr("xlink:href", "https://github.com/favicon.ico")
-      .attr("x", -8)
-      .attr("y", -8)
-      .attr("width", 16)
-      .attr("height", 16);
+  // node.append("image")
+  //     .attr("xlink:href", "https://github.com/favicon.ico")
+  //     .attr("x", -8)
+  //     .attr("y", -8)
+  //     .attr("width", 16)
+  //     .attr("height", 16);
 
   node.append("text")
       .attr("dx", 0)
-      .attr("dy", "2em")
+      .attr("dy", "0.35em")
       .text(function(d) { return d.name });
 };
 
 function tick() {
-  link.attr("x1", function(d) { return d.source.x; })
+  link.select('line')
+      .attr("x1", function(d) { return d.source.x; })
       .attr("y1", function(d) { return d.source.y; })
       .attr("x2", function(d) { return d.target.x; })
       .attr("y2", function(d) { return d.target.y; });
+
+  link.select('text')
+      .attr("dx", function(d) { return (d.source.x + d.target.x) / 2; })
+      .attr("dy", function(d) { return (d.source.y + d.target.y) / 2; })
 
   node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 };
