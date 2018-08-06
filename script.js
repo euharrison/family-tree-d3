@@ -4,6 +4,9 @@ var width = window.innerWidth,
     link,
     root;
 
+var showNeighbors = false;
+var linkedByIndex = {};
+
 var dictionary = {
   'marriage': '❤',
   'mother': 'Mãe',
@@ -32,7 +35,7 @@ var force = d3.layout.force()
     .on("tick", tick)
     .gravity(0.05)
     .distance(150)
-    .charge(-1000)
+    .charge(-500)
     .size([width, height]);
 
 d3.json("data.json", function(json) {
@@ -51,6 +54,13 @@ function update() {
       .nodes(nodes)
       .links(links)
       .start();
+
+  for (i = 0; i < nodes.length; i++) {
+    linkedByIndex[i + "," + i] = 1;
+  };
+  links.forEach(function (d) {
+    linkedByIndex[d.source.index + "," + d.target.index] = 1;
+  });
 
   if (node) link.remove();
 
@@ -77,7 +87,7 @@ function update() {
 
   node.enter().append("g")
       .attr("class", "node")
-      .on('dblclick', click)
+      .on('dblclick', connectedNodes)
       .call(force.drag);
 
   node.append("circle")
@@ -117,19 +127,26 @@ function tick() {
   node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 };
 
-function color(d) {
-  return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#fd8d3c";
+// http://www.coppelia.io/2014/07/an-a-to-z-of-extra-features-for-the-d3-force-layout/
+function connectedNodes() {
+  if (!showNeighbors) {
+    d = d3.select(this).node().__data__;
+    node.style("opacity", function (o) {
+      return neighboring(d, o) || neighboring(o, d) ? 1 : 0.1;
+    });
+    link.style("opacity", function (o) {
+      return d.index==o.source.index || d.index==o.target.index ? 1 : 0.1;
+    });
+    showNeighbors = true;
+  } else {
+    node.style("opacity", 1);
+    link.style("opacity", 1);
+    showNeighbors = false;
+  }
 }
 
-function click(d) {
-  if (d.children) {
-    d._children = d.children;
-    d.children = null;
-  } else {
-    d.children = d._children;
-    d._children = null;
-  }
-  update();
+function neighboring(a, b) {
+  return linkedByIndex[a.index + "," + b.index];
 }
 
 function getLinks(nodes) {
