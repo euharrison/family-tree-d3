@@ -4,7 +4,6 @@ var width = window.innerWidth,
     link,
     root;
 
-var showNeighbors = false;
 var linkedByIndex = {};
 
 var dictionary = {
@@ -87,7 +86,10 @@ function update() {
 
   node.enter().append("g")
       .attr("class", "node")
-      .on('dblclick', connectedNodes)
+      .on("mouseover", handleMouseOver)
+      .on("mouseout", handleMouseOut)
+      .on('touchstart', handleMouseOver)
+      .on('touchend', handleMouseOver)
       .call(force.drag);
 
   node.append("circle")
@@ -128,21 +130,19 @@ function tick() {
 };
 
 // http://www.coppelia.io/2014/07/an-a-to-z-of-extra-features-for-the-d3-force-layout/
-function connectedNodes() {
-  if (!showNeighbors) {
-    d = d3.select(this).node().__data__;
-    node.style("opacity", function (o) {
-      return neighboring(d, o) || neighboring(o, d) ? 1 : 0.1;
-    });
-    link.style("opacity", function (o) {
-      return d.index==o.source.index || d.index==o.target.index ? 1 : 0.1;
-    });
-    showNeighbors = true;
-  } else {
-    node.style("opacity", 1);
-    link.style("opacity", 1);
-    showNeighbors = false;
-  }
+function handleMouseOver() {
+  d = d3.select(this).node().__data__;
+  node.style("opacity", function (o) {
+    return neighboring(d, o) || neighboring(o, d) ? 1 : 0.2;
+  });
+  link.style("opacity", function (o) {
+    return d.index==o.source.index || d.index==o.target.index ? 1 : 0;
+  });
+}
+
+function handleMouseOut() {
+  node.style("opacity", 1);
+  link.style("opacity", 1);
 }
 
 function neighboring(a, b) {
