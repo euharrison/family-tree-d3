@@ -24,7 +24,8 @@ var width = window.innerWidth,
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
-    .attr("height", height);
+    .attr("height", height)
+    .attr("text-anchor", "middle");
 
 var force = d3.layout.force()
     .on("tick", tick)
@@ -82,8 +83,8 @@ function update() {
       .attr("height", 16);
 
   node.append("text")
-      .attr("dx", 12)
-      .attr("dy", ".35em")
+      .attr("dx", 0)
+      .attr("dy", "2em")
       .text(function(d) { return d.name });
 };
 
