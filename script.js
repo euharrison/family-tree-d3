@@ -81,15 +81,15 @@ function update() {
       .call(force.drag);
 
   node.append("circle")
-      .attr("r", function(d) { return getSize(d.generation) })
+      .attr("r", function(d) { return getSize(d.generation); })
       .attr("fill", function(d) { return d.gender === 'male' ? '#009ff7' : '#f700c5' })
 
   // node.append("image")
-  //     .attr("xlink:href", "https://github.com/favicon.ico")
-  //     .attr("x", -8)
-  //     .attr("y", -8)
-  //     .attr("width", 16)
-  //     .attr("height", 16);
+  //     .attr("xlink:href", function(d) { return 'images/'+d.id+'.jpg'; })
+  //     .attr("x", function(d) { return -getSize(d.generation); })
+  //     .attr("y", function(d) { return -getSize(d.generation); })
+  //     .attr("width", function(d) { return getSize(d.generation) * 2; })
+  //     .attr("height", function(d) { return getSize(d.generation) * 2; })
 
   node.append("text")
       .attr("dx", 0)
