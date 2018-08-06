@@ -51,7 +51,7 @@ function update() {
       .start();
 
   link = svg.selectAll(".link")
-      .data(links)
+      .data(links, function(d) { return d.target.id; });
 
   link.enter().append("line")
       .attr("class", "link");
@@ -59,7 +59,7 @@ function update() {
   link.exit().remove();
 
   node = svg.selectAll(".node")
-      .data(nodes)
+      .data(nodes, function(d) { return d.id; })
 
   node.enter().append("g")
       .attr("class", "node")
