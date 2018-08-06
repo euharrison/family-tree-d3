@@ -18,6 +18,10 @@ svg text {
   stroke: #777;
 }
 
+.link.marriage line {
+  stroke-width: 3;
+}
+
 .link text {
   fill: #ccc;
 }
@@ -38,7 +42,7 @@ var width = window.innerWidth,
     root;
 
 var dictionary = {
-  'marriage': 'Casamento',
+  'marriage': '❤',
   'mother': 'Mãe',
   'father': 'Pai',
 }
@@ -169,30 +173,26 @@ function getLinks(nodes) {
   var links = [], i = 0;
 
   nodes.forEach((node, index) => {
-    if (node.mother) {
-      links.push({ 
-        source: nodes.find(n => n.id === node.mother),
-        target: index,
-        generation: node.generation,
-        type: 'mother'
-      });
-    }
-    if (node.father) {
-      links.push({ 
-        source: nodes.find(n => n.id === node.father),
-        target: index,
-        generation: node.generation,
-        type: 'father'
-      });
-    }
-    if (node.marriage) {
-      links.push({ 
-        source: nodes.find(n => n.id === node.marriage),
-        target: index,
-        generation: node.generation,
-        type: 'marriage'
-      });
-    }
+    var types = [
+      'mother',
+      'father',
+      'marriage',
+    ]
+
+    types.forEach(function(type) {
+      var value = node[type];
+      if (value) {
+        var source = nodes.find(n => n.id === value);
+        if (source !== undefined) {
+          links.push({ 
+            source: source,
+            target: index,
+            generation: node.generation,
+            type: type,
+          });
+        }
+      }
+    });
   });
 
   return links;
