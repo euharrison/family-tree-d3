@@ -1,106 +1,61 @@
-{
-  "nodes": [
-    {
-      "name": "Randolfo",
-      "gender": "male",
-      "generation": 1
-    },
-    {
-      "name": "Cirene",
-      "gender": "female",
-      "generation": 1
-    },
-    {
-      "name": "Hugo",
-      "gender": "male",
-      "generation": 2
-    },
-    {
-      "name": "Antonio",
-      "gender": "male",
-      "generation": 2
-    },
-    {
-      "name": "Hudson",
-      "gender": "male",
-      "generation": 3
-    },
-    {
-      "name": "Hudna",
-      "gender": "female",
-      "generation": 3
-    },
-    {
-      "name": "Harrison",
-      "gender": "male",
-      "generation": 3
-    },
-    {
-      "name": "Azenate",
-      "gender": "female",
-      "generation": 2
-    }
-  ],
-  "links": [
-    {
-      "source": 0,
-      "target": 1,
-      "type": "marriage"
-    },
-    {
-      "source": 0,
-      "target": 2,
-      "type": "father"
-    },
-    {
-      "source": 1,
-      "target": 2,
-      "type": "mother"
-    },
-    {
-      "source": 0,
-      "target": 3,
-      "type": "father"
-    },
-    {
-      "source": 1,
-      "target": 3,
-      "type": "mother"
-    },
-    {
-      "source": 2,
-      "target": 4,
-      "type": "father"
-    },
-    {
-      "source": 2,
-      "target": 5,
-      "type": "father"
-    },
-    {
-      "source": 2,
-      "target": 6,
-      "type": "father"
-    },
-    {
-      "source": 7,
-      "target": 4,
-      "type": "mother"
-    },
-    {
-      "source": 7,
-      "target": 5,
-      "type": "mother"
-    },
-    {
-      "source": 7,
-      "target": 6,
-      "type": "mother"
-    },
-    {
-      "source": 2,
-      "target": 7,
-      "type": "marriage"
-    }
-  ]
-}
+[
+  {
+    "id": "randolfo-pereira",
+    "name": "Randolfo",
+    "gender": "male",
+    "marriage": "cirene-mendonca",
+    "generation": 1
+  },
+  {
+    "id": "cirene-mendonca",
+    "name": "Cirene",
+    "gender": "female",
+    "generation": 1
+  },
+  {
+    "id": "hugo-pereira-de-mendonca",
+    "name": "Hugo",
+    "gender": "male",
+    "father": "randolfo-pereira",
+    "mother": "cirene-mendonca",
+    "generation": 2
+  },
+  {
+    "id": "antonio-pereira-de-mendonca",
+    "name": "Antonio",
+    "gender": "male",
+    "father": "randolfo-pereira",
+    "mother": "cirene-mendonca",
+    "generation": 2
+  },
+  {
+    "id": "hudson-lima-mendonca",
+    "name": "Hudson",
+    "gender": "male",
+    "father": "hugo-pereira-de-mendonca",
+    "mother": "azenate-de-lima-mendonca",
+    "generation": 3
+  },
+  {
+    "id": "hudna-lima-mendonca",
+    "name": "Hudna",
+    "gender": "female",
+    "father": "hugo-pereira-de-mendonca",
+    "mother": "azenate-de-lima-mendonca",
+    "generation": 3
+  },
+  {
+    "id": "harrison-lima-mendonca",
+    "name": "Harrison",
+    "gender": "male",
+    "father": "hugo-pereira-de-mendonca",
+    "mother": "azenate-de-lima-mendonca",
+    "generation": 3
+  },
+  {
+    "id": "azenate-de-lima-mendonca",
+    "name": "Azenate",
+    "gender": "female",
+    "generation": 2
+  }
+]
