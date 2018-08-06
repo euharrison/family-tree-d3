@@ -28,9 +28,9 @@ var svg = d3.select("body").append("svg")
 
 var force = d3.layout.force()
     .on("tick", tick)
-    .gravity(0.05)
+    .gravity(0)
     .distance(100)
-    .charge(-100)
+    .charge(-1000)
     .size([width, height]);
 
 d3.json("data.json", function(json) {
@@ -70,6 +70,10 @@ function update() {
       .on("click", click)
       .call(force.drag);
 
+  node.append("circle")
+      .attr("r", function(d) { return 10 + 4 * d.size })
+      .attr("fill", color);
+
   node.append("image")
       .attr("xlink:href", "https://github.com/favicon.ico")
       .attr("x", -8)
@@ -77,16 +81,10 @@ function update() {
       .attr("width", 16)
       .attr("height", 16);
 
-  node.append("circle")
-      .attr("r", 5)
-      .attr("fill", color);
-
   node.append("text")
       .attr("dx", 12)
       .attr("dy", ".35em")
       .text(function(d) { return d.name });
-
-  node.exit().remove();
 };
 
 function tick() {
@@ -117,8 +115,14 @@ function flatten(root) {
   var nodes = [], i = 0;
 
   function recurse(node) {
-    if (node.children) node.size = node.children.reduce(function(p, v) { return p + recurse(v); }, 0);
-    if (!node.id) node.id = ++i;
+    if (node.children) {
+      node.size = node.children.reduce(function(p, v) { return p + recurse(v); }, 0);
+    } else {
+      node.size = 1;
+    }
+    if (!node.id) {
+      node.id = ++i;
+    }
     nodes.push(node);
     return node.size;
   }
