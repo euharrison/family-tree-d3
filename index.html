@@ -15,10 +15,14 @@ svg text {
 }
 
 .link line {
-  stroke: #ccc;
+  stroke: #777;
 }
 
 .link text {
+  fill: #ccc;
+}
+
+.node text {
   fill: #fff;
 }
 
@@ -46,9 +50,9 @@ var svg = d3.select("body").append("svg")
 svg.append("defs").selectAll("marker")
     .data(["suit", "licensing", "resolved"])
   .enter().append("marker")
-    .attr("id", function(d) { return d; })
+    .attr("id", function(d, i) { return 'arrow'+(i+1); })
     .attr("viewBox", "0 -5 10 10")
-    .attr("refX", 50)
+    .attr("refX", function(d, i) { return getSize(i) * 2; })
     .attr("refY", 0)
     .attr("markerWidth", 6)
     .attr("markerHeight", 6)
@@ -90,7 +94,7 @@ function update() {
       .attr("class", function(d) { return "link " + d.type })
 
   link.append("line")
-      .style("marker-end", function(d) { return d.type === 'marriage' ? '' : 'url(#suit)' })
+      .style("marker-end", function(d) { return d.type === 'marriage' ? '' : 'url(#arrow'+d.generation+')' })
       .attr("class", "link");
 
   link.append("text")
@@ -110,8 +114,8 @@ function update() {
       .call(force.drag);
 
   node.append("circle")
-      .attr("r", 22.5)
-      .attr("fill", function(d) { return d.gender === 'male' ? '#009ff7' : '#f700c5' });
+      .attr("r", function(d) { return getSize(d.generation) })
+      .attr("fill", function(d) { return d.gender === 'male' ? '#009ff7' : '#f700c5' })
 
   // node.append("image")
   //     .attr("xlink:href", "https://github.com/favicon.ico")
@@ -169,6 +173,7 @@ function getLinks(nodes) {
       links.push({ 
         source: nodes.find(n => n.id === node.mother),
         target: index,
+        generation: node.generation,
         type: 'mother'
       });
     }
@@ -176,6 +181,7 @@ function getLinks(nodes) {
       links.push({ 
         source: nodes.find(n => n.id === node.father),
         target: index,
+        generation: node.generation,
         type: 'father'
       });
     }
@@ -183,12 +189,17 @@ function getLinks(nodes) {
       links.push({ 
         source: nodes.find(n => n.id === node.marriage),
         target: index,
+        generation: node.generation,
         type: 'marriage'
       });
     }
   });
 
   return links;
+}
+
+function getSize(generation) {
+  return 10 + (3 - generation) * 10;
 }
 
 </script>

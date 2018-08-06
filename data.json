@@ -21,6 +21,12 @@
     "generation": 2
   },
   {
+    "id": "azenate-de-lima-mendonca",
+    "name": "Azenate",
+    "gender": "female",
+    "generation": 2
+  },
+  {
     "id": "antonio-pereira-de-mendonca",
     "name": "Antonio",
     "gender": "male",
@@ -34,6 +40,13 @@
     "gender": "male",
     "father": "hugo-pereira-de-mendonca",
     "mother": "azenate-de-lima-mendonca",
+    "marriage": "natalia-rezende",
+    "generation": 3
+  },
+  {
+    "id": "natalia-rezende",
+    "name": "Natalia",
+    "gender": "female",
     "generation": 3
   },
   {
@@ -51,11 +64,5 @@
     "father": "hugo-pereira-de-mendonca",
     "mother": "azenate-de-lima-mendonca",
     "generation": 3
-  },
-  {
-    "id": "azenate-de-lima-mendonca",
-    "name": "Azenate",
-    "gender": "female",
-    "generation": 2
   }
 ]
