@@ -111,7 +111,6 @@
     "marriage": "Juvanelia Pereira de Mendonça",
     "generation": 2
   },
-
   {
     "id": "Hugo Pereira de Mendonça",
     "name": "Hugo",
@@ -135,10 +134,10 @@
     "generation": 2
   },
   {
-    "id": "Hudson LimaMendonça",
+    "id": "Hudson Lima Mendonça",
     "name": "Hudson",
     "gender": "male",
-    "father": "hugo Pereira de Mendonça",
+    "father": "Hugo Pereira de Mendonça",
     "mother": "Azenate de Lima Mendonça",
     "marriage": "Natalia Rezende",
     "generation": 3
