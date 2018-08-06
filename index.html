@@ -94,8 +94,7 @@ function update() {
       .attr("class", "link");
 
   link.append("text")
-      .attr("dx", 0)
-      .attr("dy", "2em")
+      .attr("dy", "-0.2em")
       .text(function(d) { return dictionary[d.type] || d.type });
 
   link.exit().remove();
@@ -135,8 +134,14 @@ function tick() {
       .attr("y2", function(d) { return d.target.y; });
 
   link.select('text')
-      .attr("dx", function(d) { return (d.source.x + d.target.x) / 2; })
-      .attr("dy", function(d) { return (d.source.y + d.target.y) / 2; })
+      .attr("transform", function(d) {
+        var x = (d.source.x + d.target.x) / 2;
+        var y = (d.source.y + d.target.y) / 2;
+        var deltaX = d.target.x - d.source.x;
+        var deltaY = d.target.y - d.source.y;
+        var angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+        return 'translate('+x+','+y+') rotate('+angle+')';
+      })
 
   node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 };
