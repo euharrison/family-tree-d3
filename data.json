@@ -2,31 +2,43 @@
   "nodes": [
     {
       "name": "Randolfo",
+      "gender": "male",
       "generation": 1
     },
     {
       "name": "Cirene",
+      "gender": "female",
       "generation": 1
     },
     {
       "name": "Hugo",
+      "gender": "male",
       "generation": 2
     },
     {
       "name": "Antonio",
+      "gender": "male",
       "generation": 2
     },
     {
       "name": "Hudson",
+      "gender": "male",
       "generation": 3
     },
     {
       "name": "Hudna",
+      "gender": "female",
       "generation": 3
     },
     {
       "name": "Harrison",
+      "gender": "male",
       "generation": 3
+    },
+    {
+      "name": "Azenate",
+      "gender": "female",
+      "generation": 2
     }
   ],
   "links": [
@@ -69,6 +81,26 @@
       "source": 2,
       "target": 6,
       "type": "father"
+    },
+    {
+      "source": 7,
+      "target": 4,
+      "type": "mother"
+    },
+    {
+      "source": 7,
+      "target": 5,
+      "type": "mother"
+    },
+    {
+      "source": 7,
+      "target": 6,
+      "type": "mother"
+    },
+    {
+      "source": 2,
+      "target": 7,
+      "type": "marriage"
     }
   ]
 }

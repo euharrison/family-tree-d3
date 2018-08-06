@@ -4,6 +4,7 @@
 
 body {
   margin: 0;
+  background: black;
 }
 
 svg text {
@@ -18,7 +19,7 @@ svg text {
 }
 
 .link text {
-  fill: #aaa;
+  fill: #fff;
 }
 
 </style>
@@ -54,8 +55,7 @@ svg.append("defs").selectAll("marker")
     .attr("orient", "auto")
   .append("path")
     .attr("d", "M0,-5L10,0L0,5 L10,0 L0, -5")
-    .style("stroke", "#4679BD")
-    .style("opacity", "0.6");
+    .style("stroke", "#ccc")
 
 var force = d3.layout.force()
     .on("tick", tick)
@@ -87,10 +87,10 @@ function update() {
       .data(links)
 
   link.enter().append("g")
-      .attr("class", function(d) { return "link "+d.type })
+      .attr("class", function(d) { return "link " + d.type })
 
   link.append("line")
-      .style("marker-end",  "url(#suit)")
+      .style("marker-end", function(d) { return d.type === 'marriage' ? '' : 'url(#suit)' })
       .attr("class", "link");
 
   link.append("text")
@@ -112,7 +112,7 @@ function update() {
 
   node.append("circle")
       .attr("r", 22.5)
-      .attr("fill", color);
+      .attr("fill", function(d) { return d.gender === 'male' ? '#009ff7' : '#f700c5' });
 
   // node.append("image")
   //     .attr("xlink:href", "https://github.com/favicon.ico")
